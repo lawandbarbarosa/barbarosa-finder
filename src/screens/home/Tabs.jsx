@@ -7,6 +7,10 @@ import { FontAwesome } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import Search from '../search/Search';
+import Message from '../Message/Message';
+import Detail from '../Detail/Detail';
+import Menu from '../menu/Menu';
+import Favourite from '../favourite/Favourite';
 
 const Tab = createBottomTabNavigator()
 
@@ -41,21 +45,21 @@ export default function Tabs() {
       />
       <Tab.Screen
         name='message'
-        component={Home}
+        component={Message}
         options={{
           tabBarIcon: (props) => <AntDesign name='message1' color='#181D31' size={25} />
         }}
       />
       <Tab.Screen
-        name='favorite'
-        component={Home}
+        name='Fav'
+        component={Favourite}
         options={{
           tabBarIcon: (props) => <MaterialIcons name='favorite' color='#181D31' size={25} />
         }}
       />
       <Tab.Screen
         name='menu'
-        component={Home}
+        component={Menu}
         options={{
           tabBarIcon: (props) => <Entypo name='menu' color='#181D31' size={25} />
         }}

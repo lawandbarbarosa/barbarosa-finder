@@ -19,8 +19,7 @@ export default function Login({ navigation}) {
       return;
     }
 
-    auth
-      .createUserWithEmailAndPassword(email, password)
+    auth.createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
         const user = userCredential.user;
         user

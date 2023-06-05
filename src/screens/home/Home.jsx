@@ -6,12 +6,12 @@ import HomeContent from '../../components/HomeContent'
 
 
 
-export default function Home() {
+export default function Home({navigation}) {
   return (
     <>
      <ScrollView style={{width:'100%',height:'100%'}}>
       <Header />
-      <HomeContent />
+      <HomeContent navigation={navigation} />
     </ScrollView>
     </>
    
