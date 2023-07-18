@@ -51,21 +51,27 @@ export const cartSlice = createSlice({
     },
 
     addToFavourite:(state,action)=>{
-      const newItem = action.payload.job
-      const cartJob = state.items.find((job)=> job.product.id)
+      const newItem = action.payload.job;
+      const cartJob = state.JobDetail.find((job)=> job.id ===newItem.id)
 
 
       if(cartJob){
-        cartJob.quantity +=1
+        cartJob.quantity +=1;
       }else{
-        state.items.push({job:newItem,quantity:1})
+        state.JobDetail.push({...newItem,quantity:1});
       }
+    },
+
+    removeFromFavourite:(state,action)=>{
+      const jobId = action.payload;
+      state.JobDetail = state.JobDetail.filter((job)=> job.id !==jobId )
     }
 
   }
 });
 
-export const { setSelectedJob, setInputValue, setLocationValue, AddingJob, setAddRequirePlan, setAddrequire } = cartSlice.actions;
+export const { setSelectedJob, setInputValue, setLocationValue, AddingJob, 
+  setAddRequirePlan, setAddrequire,addToFavourite,removeFromFavourite } = cartSlice.actions;
 
 
 export default cartSlice.reducer;

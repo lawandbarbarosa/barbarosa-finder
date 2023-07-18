@@ -7,6 +7,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import Job from '../screens/home/Job';
 import { useSelector, useDispatch } from 'react-redux';
 import { cartSlice } from '../store/CartSlice';
+import { addToFavourite } from '../store/CartSlice';
 const data = [
   { id: 1, name: 'All' },
   { id: 2, name: 'Ui,Ux Designer' },
@@ -18,8 +19,6 @@ const data = [
 
 import { Fontisto } from '@expo/vector-icons';
 
-
-
 export default function HomeContent({ navigation }) {
   const [focused, setFocused] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
@@ -29,55 +28,45 @@ export default function HomeContent({ navigation }) {
   const dispatch = useDispatch();
 
   const addtoCart = () => {
-    dispatch(cartSlice.actions.addToCart());
+    dispatch(cartSlice.actions.addToFavourite());
   };
 
   const renderItem = ({ item }) => {
+    const { id, names, location, company, input } = item;
+
     return (
-      <>
-        {jobs.map((job) => {
-          const { id, names, location, company, image, input } = job;
-          if (
-            (focused === 'All' || focused === input) &&
-            (searchQuery === '' || input.toLowerCase().includes(searchQuery.toLowerCase()))
-          )
-            return (
-              <TouchableOpacity
-                key={id}
-                style={styles.jobBorder}
-                activeOpacity={2}
-                onPress={() => {
-                  dispatch(cartSlice.actions.setSelectedJob(item.id));
-                  navigation.navigate('Detail');
-                }}
-              >
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                  <View style={{ padding: 3, backgroundColor: '#181D31', position: 'absolute', width: 50 }}>
-                    <Image source={image} style={{ width: 40, height: 40, padding: 15 }} />
-                  </View>
-                  <Text style={{ marginLeft: 70, padding: 5, fontSize: 18, fontWeight: '600' }}>{input}</Text>
-                  <Entypo name="dots-three-vertical" size={24} color="#181D31" style={{ marginTop: 6, opacity: 0.5 }} />
-                </View>
-                <View style={styles.footer}>
-                  <Text style={{ fontSize: 16, fontWeight: '600', color: '#181D31' }}>{company}</Text>
-                  <Text>
-                    <FontAwesome5 name="location-arrow" size={15} color="#181D31" style={{ opacity: 0.5 }} />
-                    {location}
-                  </Text>
-                  <Fontisto
-                    name="favorite"
-                    size={24}
-                    color={focusFavourite ? 'green' : '#181D31'}
-                    onPress={() => {
-                      setFocusFavourite(!focusFavourite);
-                      addtoCart();
-                    }}
-                  />
-                </View>
-              </TouchableOpacity>
-            );
-        })}
-      </>
+      <TouchableOpacity
+        style={styles.jobBorder}
+        activeOpacity={2}
+        onPress={() => {
+          dispatch(cartSlice.actions.setSelectedJob(id));
+          navigation.navigate('Detail');
+        }}
+      >
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <View style={{ padding: 3, backgroundColor: '#181D31', position: 'absolute', width: 50 }}>
+            
+          </View>
+          <Text style={{ marginLeft: 70, padding: 5, fontSize: 18, fontWeight: '600' }}>{input}</Text>
+          <Entypo name="dots-three-vertical" size={24} color="#181D31" style={{ marginTop: 6, opacity: 0.5 }} />
+        </View>
+        <View style={styles.footer}>
+          <Text style={{ fontSize: 16, fontWeight: '600', color: '#181D31' }}>{company}</Text>
+          <Text>
+            <FontAwesome5 name="location-arrow" size={15} color="#181D31" style={{ opacity: 0.5 }} />
+            {location}
+          </Text>
+          <Fontisto
+            name="favorite"
+            size={24}
+            color={focusFavourite ? 'green' : '#181D31'}
+            onPress={() => {
+              setFocusFavourite(!focusFavourite);
+              addtoCart();
+            }}
+          />
+        </View>
+      </TouchableOpacity>
     );
   };
 
@@ -114,7 +103,7 @@ export default function HomeContent({ navigation }) {
       </ScrollView>
       <View style={styles.contentContainer}>
         <Text style={{ fontSize: 26, fontWeight: '700', color: '#181D31' }}>Recently Added</Text>
-        <FlatList data={jobs} renderItem={renderItem} keyExtractor={(item) => item.id} />
+        <FlatList data={jobs} renderItem={renderItem} keyExtractor={(item) => item.id.toString()} />
       </View>
     </View>
   );

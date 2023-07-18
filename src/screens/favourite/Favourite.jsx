@@ -4,7 +4,7 @@ import { StatusBar } from 'expo-status-bar'
 import { AntDesign } from '@expo/vector-icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { cartSlice } from '../../store/CartSlice';
-
+import { removeFromFavourite } from '../../store/CartSlice';
 export default function Favourite() {
 
   const jobItems = useSelector((state) => state.job.items);
@@ -17,10 +17,10 @@ export default function Favourite() {
           <Text style={{ fontSize: 25, fontWeight: '500' }}>2 jobs added</Text>
         </View>
         <View style={styles.favborder}>
-          <Text style={{ fontSize: 22, fontWeight: '700' }}>{item.job.input}</Text>
-          <Text style={{ fontSize: 22, fontWeight: '700' }}>{item.job.location}</Text>
+          <Text style={{ fontSize: 22, fontWeight: '700' }}>{item.input}</Text>
+          <Text style={{ fontSize: 22, fontWeight: '700' }}>{item.location}</Text>
         </View>
-        <TouchableOpacity onPress={() => dispatch(cartSlice.actions.removeFromFavourite(item.job.id))}>
+        <TouchableOpacity>
           <AntDesign name="delete" size={24} color="black" style={{ position: 'absolute',
            marginLeft: 240, marginTop: -26 }} />
         </TouchableOpacity>
@@ -34,7 +34,7 @@ export default function Favourite() {
       <FlatList
         data={jobItems}
         renderItem={renderItem}
-        keyExtractor={(item) => item.job.id.toString()}
+        keyExtractor={(item) => item.job.toString()}
       />
     </SafeAreaView>
   )
